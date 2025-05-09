@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultorio Médico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Consultorio Médico</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#registro">Registro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#consulta">Solicitar Consulta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tratamiento">Tratamientos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <section id="registro" class="mb-5">
+            <h2>Registro de Pacientes</h2>
+            <form id="registroForm" class="row g-3">
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre completo</label>
+                    <input type="text" class="form-control" id="nombre" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="fechaNacimiento">
+                </div>
+                <div class="col-md-6">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="tel" class="form-control" id="telefono">
+                </div>
+                <div class="col-md-6">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="consulta" class="mb-5">
+            <h2>Solicitar Consulta</h2>
+            <form id="consultaForm" class="row g-3">
+                <div class="col-md-6">
+                    <label for="pacienteEmail" class="form-label">Email del Paciente</label>
+                    <input type="email" class="form-control" id="pacienteEmail" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="doctor" class="form-label">Doctor</label>
+                    <select class="form-select" id="doctor" required>
+                        <option value="" selected disabled>Seleccione un doctor</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="fechaConsulta" class="form-label">Fecha y Hora</label>
+                    <input type="datetime-local" class="form-control" id="fechaConsulta" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="motivo" class="form-label">Motivo</label>
+                    <input type="text" class="form-control" id="motivo" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Solicitar Consulta</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="tratamiento" class="mb-5">
+            <h2>Seguimiento de Tratamiento</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Mis Tratamientos</h3>
+                    <div id="listaTratamientos" class="list-group"></div>
+                </div>
+                <div class="col-md-6">
+                    <h3>Seguimiento</h3>
+                    <form id="seguimientoForm" class="row g-3">
+                        <input type="hidden" id="tratamientoId">
+                        <div class="col-12">
+                            <label for="observaciones" class="form-label">Observaciones</label>
+                            <textarea class="form-control" id="observaciones" rows="3" required></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="efectividad" class="form-label">Efectividad</label>
+                            <select class="form-select" id="efectividad" required>
+                                <option value="" selected disabled>Seleccione</option>
+                                <option value="excelente">Excelente</option>
+                                <option value="buena">Buena</option>
+                                <option value="regular">Regular</option>
+                                <option value="mala">Mala</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Registrar Seguimiento</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

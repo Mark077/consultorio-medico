@@ -1,0 +1,147 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Cargar doctores al iniciar
+    cargarDoctores();
+    
+    // Manejar registro de usuario
+    document.getElementById('registroForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const usuario = {
+            nombre: document.getElementById('nombre').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            fechaNacimiento: document.getElementById('fechaNacimiento').value,
+            telefono: document.getElementById('telefono').value,
+            direccion: document.getElementById('direccion').value
+        };
+        
+        fetch('/api/usuarios/registro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usuario)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Error en el registro');
+        })
+        .then(data => {
+            alert('Registro exitoso!');
+            document.getElementById('registroForm').reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en el registro: ' + error.message);
+        });
+    });
+    
+    // Manejar solicitud de consulta
+    document.getElementById('consultaForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const consulta = {
+            pacienteEmail: document.getElementById('pacienteEmail').value,
+            doctorId: document.getElementById('doctor').value,
+            fechaConsulta: document.getElementById('fechaConsulta').value,
+            motivo: document.getElementById('motivo').value
+        };
+        
+        fetch('/api/consultas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(consulta)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Error al solicitar consulta');
+        })
+        .then(data => {
+            alert('Consulta solicitada con éxito!');
+            document.getElementById('consultaForm').reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al solicitar consulta: ' + error.message);
+        });
+    });
+    
+    // Manejar seguimiento de tratamiento
+    document.getElementById('seguimientoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const seguimiento = {
+            tratamientoId: document.getElementById('tratamientoId').value,
+            observaciones: document.getElementById('observaciones').value,
+            efectividad: document.getElementById('efectividad').value
+        };
+        
+        fetch('/api/seguimiento', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(seguimiento)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Error al registrar seguimiento');
+        })
+        .then(data => {
+            alert('Seguimiento registrado con éxito!');
+            document.getElementById('seguimientoForm').reset();
+            cargarTratamientos();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al registrar seguimiento: ' + error.message);
+        });
+    });
+    
+    // Cargar lista de doctores
+    function cargarDoctores() {
+        fetch('/api/doctores')
+            .then(response => response.json())
+            .then(doctores => {
+                const select = document.getElementById('doctor');
+                doctores.forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor.id;
+                    option.textContent = `${doctor.nombre} - ${doctor.especialidad}`;
+                    select.appendChild(option);
+                });
+            });
+    }
+    
+    // Cargar tratamientos del paciente
+    function cargarTratamientos() {
+        const email = prompt('Ingrese su email para ver sus tratamientos:');
+        if (!email) return;
+        
+        fetch(`/api/tratamientos?email=${email}`)
+            .then(response => response.json())
+            .then(tratamientos => {
+                const lista = document.getElementById('listaTratamientos');
+                lista.innerHTML = '';
+                
+                tratamientos.forEach(tratamiento => {
+                    const item = document.createElement('button');
+                    item.type = 'button';
+                    item.className = 'list-group-item list-group-item-action';
+                    item.textContent = `${tratamiento.nombre} - ${tratamiento.estado}`;
+                    item.onclick = () => {
+                        document.getElementById('tratamientoId').value = tratamiento.id;
+                    };
+                    lista.appendChild(item);
+                });
+            });
+    }
+});

@@ -1,0 +1,39 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+bin/
+.nb-gradle/
+
+# Logs
+*.log
+logs/
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Node/NPM
+node_modules/
+npm-debug.log*
+
+# Archivos de desarrollo local
+application-local.properties
+.env
