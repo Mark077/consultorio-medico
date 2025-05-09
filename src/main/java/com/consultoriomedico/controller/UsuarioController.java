@@ -1,0 +1,35 @@
+// UsuarioController.java
+package com.consultoriomedico.controller;
+
+import com.consultoriomedico.model.Usuario;
+import com.consultoriomedico.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/usuarios")
+public class UsuarioController {
+    @Autowired
+    private UsuarioService usuarioService;
+    
+@PostMapping("/registro")
+public ResponseEntity<?> registrarUsuario(@Valid @RequestBody Usuario usuario, BindingResult result) {
+    if (result.hasErrors()) {
+        Map<String, String> errores = new HashMap<>();
+        result.getFieldErrors().forEach(err -> {
+            errores.put(err.getField(), err.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errores);
+    }
+    
+    if (usuarioService.obtenerUsuarioPorEmail(usuario.getEmail()) != null) {
+        return ResponseEntity.badRequest().body(Collections.singletonMap("email", "El email ya está registrado"));
+    }
+    
+    Usuario nuevoUsuario = usuarioService.registrarUsuario(usuario);
+    return ResponseEntity.ok(nuevoUsuario);
+}
+	
+	
+}
